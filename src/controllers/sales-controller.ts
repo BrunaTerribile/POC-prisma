@@ -6,7 +6,7 @@ async function postSale(req: Request, res: Response) {
     const { customer } =  req.body
 
     const result = await saleService.createSale(id, customer)
-    res.status(201).send(`Sale inserted ${result.rowCount}`)
+    res.status(201).send(`Sale inserted ${result}`)
 }
 
 async function getAllSales(req: Request, res: Response) {
@@ -20,10 +20,10 @@ async function getRanking(req: Request, res: Response) {
 }
 
 async function deleteSale(req: Request, res: Response) {
-    const { id } = req.headers
+    const id = parseInt(req.params.id)
 
     const result = await saleService.deleteOne(id)
-    res.status(200).send(`Sale deleted ${result.rowCount}`)
+    res.status(200).send(`Sale deleted ${result}`)
 }
 
 export {

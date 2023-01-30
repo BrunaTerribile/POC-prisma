@@ -1,4 +1,4 @@
-import saleRepository from "../repositories/sales-repository"
+import saleRepository from "../repositories/sales-repository.js"
 
 async function createSale(id: number, customer: string) {
     saleRepository.updateStock(id)
@@ -8,15 +8,15 @@ async function createSale(id: number, customer: string) {
 
 async function getSales(){
     const result = await saleRepository.getAll()
-    return result.rows;
+    return result;
 }
 
 async function getSalesRank(){
     const result = await saleRepository.getRank()
-    return result.rows;
+    return result;
 }
 
-async function deleteOne(id: string | string[]){
+async function deleteOne(id: number){
     const result = await saleRepository.cancelSale(id)
     return result;
 }

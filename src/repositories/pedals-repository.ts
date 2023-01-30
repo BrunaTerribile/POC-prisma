@@ -1,30 +1,30 @@
-import { connection } from "../database/database.js";
 import Pedal from "../protocols/pedal.js";
-import { QueryResult } from "pg";
+import { prisma } from "../database/database.js";
 
-async function getAll(): Promise<QueryResult<any>>{
-    return connection.query(
-        `SELECT * FROM pedals`
-    );
+async function getAll(){
+    const data = prisma.pedals.findMany()
+    return data;
 }
 
-async function getById(id: number): Promise<QueryResult<any>>{
-    return connection.query(
-        `SELECT * FROM pedals
-        WHERE id = $1`,
-        [id]
-    );
+async function getById(id: number){
+    const data = prisma.pedals.findUnique({
+        where: { id: id }
+    })
+    return data;
 }
 
-async function addPedal(pedal: Pedal): Promise<QueryResult>{
-    return connection.query(
-        `INSERT INTO pedals (model, brand, value) 
-        VALUES ($1, $2, $3)
-        RETURNING id`,
-        [pedal.model, pedal.brand, pedal.value]
-    );
-}
+async function addPedal(pedal: Pedal){
+    await prisma.pedals.create({
+        data: {
+            model: pedal.model,
+            brand: pedal.brand,
+            value: pedal.value
+        }
+    })
 
+    const data = await prisma.pedals.findMany({ orderBy: { id: 'desc' } });
+    return data[0];
+}
 
 const pedalRepository = {
     getAll,

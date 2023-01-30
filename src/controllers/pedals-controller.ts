@@ -3,7 +3,6 @@ import Pedal from "../protocols/pedal.js";
 import pedalService from "../services/pedal-service.js";
 
 async function getPedals(req: Request, res: Response){
-
     const pedals = await pedalService.getAllPedals()
     res.status(200).send(pedals)
 }
@@ -19,8 +18,8 @@ async function postPedal(req: Request, res: Response){
     const newPedal = req.body as Pedal
     const { quantity } = req.body
 
-    const result = await pedalService.createPedal(newPedal, quantity)
-    res.status(201).send(`Pedal inserted ${result}`)
+    await pedalService.createPedal(newPedal, quantity)
+    res.status(201).send(`Pedal inserted`)
 }
 
 export {

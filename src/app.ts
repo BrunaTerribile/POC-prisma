@@ -13,7 +13,7 @@ server.get('/pedals/:id', getOne)
 
 server.post('/sales/:id', postSale)
 server.get('/sales', getAllSales)
-server.delete('/sales', deleteSale)
+server.delete('/sales/:id', deleteSale)
 server.get('/sales/ranking', getRanking)
 
 server.listen(4000, () => { console.log('Running...')})
